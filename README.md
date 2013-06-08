@@ -4,6 +4,20 @@ Wrapper around the twilio API
 
 ## Usage
 
+### Client
+
+Create a twilio client object given the account ID and the auth token of
+your twilio account.
+
+#### In-ports
+
+  * ACCOUNT: the account ID
+  * TOKEN: the auth token
+
+#### Out-ports
+
+  * OUT: a twilio client object
+
 ### Sms
 
 Send/Receive SMS messages. See the twilio doc on [receiving SMS
