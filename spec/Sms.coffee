@@ -52,7 +52,7 @@ describe 'Sms component', ->
       chai.expect(client.host).to.equal 'api.twilio.com'
 
   describe 'sending SMS messages', ->
-    it 'sends an SMS message', ->
+    it 'sends an SMS message', (done) ->
       send = c.inPorts.send
       out = c.outPorts.out
 
@@ -61,6 +61,8 @@ describe 'Sms component', ->
         chai.expect(data.from).to.equal '+15005550006'
         chai.expect(data.to).to.equal '+15005550006'
         chai.expect(data.body).to.equal 'test'
+      out.on 'disconnect', ->
+        done()
 
       send.connect()
       send.send
@@ -69,13 +71,15 @@ describe 'Sms component', ->
         body: 'test'
       send.disconnect()
 
-    it 'sends an SMS message but an error is returned', ->
+    it 'sends an SMS message but an error is returned', (done) ->
       send = c.inPorts.send
       out = c.outPorts.out
 
       out.on 'data', (data) ->
         chai.expect(data.status).to.equal 400
         chai.expect(data.code).to.equal 21606
+      out.on 'disconnect', ->
+        done()
 
       send.connect()
       send.send
@@ -84,16 +88,16 @@ describe 'Sms component', ->
         body: 'test'
       send.disconnect()
 
-    it 'sends multiple SMS messages', ->
+    it 'sends multiple SMS messages', (done) ->
       send = c.inPorts.send
       out = c.outPorts.out
       count = 0
 
       out.on 'data', (data) ->
         chai.expect(data.price).to.equal null
-        count++
       out.on 'disconnect', ->
-        chai.expect(count).to.equal 3
+        count++
+        done() if count is 3
 
       send.connect()
       send.send
@@ -110,7 +114,40 @@ describe 'Sms component', ->
         body: 'c'
       send.disconnect()
 
-  describe 'receiving SMS messages', ->
-    it 'receives an SMS message', ->
+  describe 'receiving SMS messages (which should get an error because of limited test credential capability', ->
+    it 'receives an SMS message', (done) ->
+      send = c.inPorts.send
+      receive = c.inPorts.receive
+      out = c.outPorts.out
+
+      out.once 'data', (data) ->
+        out.once 'data', (data) ->
+          chai.expect(data.status).to.equal 403
+          chai.expect(data.code).to.equal 20008
+        out.once 'disconnect', (data) ->
+          done()
+
+        receive.connect()
+        receive.send data.sid
+        receive.disconnect()
+
+      send.connect()
+      send.send
+        from: '+15005550006'
+        to: '+15005550006'
+        body: 'test'
+      send.disconnect()
 
     it 'receives all stored SMS messages', ->
+      send = c.inPorts.send
+      receive = c.inPorts.receive
+      out = c.outPorts.out
+
+      out.on 'data', (data) ->
+        chai.expect(data.status).to.equal 403
+        chai.expect(data.code).to.equal 20008
+      out.on 'disconnect', (data) ->
+        done()
+
+      receive.connect()
+      receive.disconnect()

@@ -14,5 +14,11 @@ class Sms extends noflo.Component
     @inPorts.send.on 'data', (message) =>
       @client.sms.messages.create message, (e, msg) =>
         @outPorts.out.send e or msg
+        @outPorts.out.disconnect()
+
+    @inPorts.receive.on 'data', (sid) =>
+      @client.sms.messages(sid).get (e, msg) =>
+        @outPorts.out.send e or msg
+        @outPorts.out.disconnect()
 
 exports.getComponent = -> new Sms
