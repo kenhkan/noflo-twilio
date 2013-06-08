@@ -1,5 +1,5 @@
 {
-  "name": "twilio",
+  "name": "noflo-twilio",
   "description": "Wrapper around the twilio API",
   "version": "0.1.0",
   "author": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/kenhkan/twilio.git"
+    "url": "git://github.com/kenhkan/noflo-twilio.git"
   },
   "licenses": [
     {
