@@ -84,6 +84,32 @@ describe 'Sms component', ->
         body: 'test'
       send.disconnect()
 
+    it 'sends multiple SMS messages', ->
+      send = c.inPorts.send
+      out = c.outPorts.out
+      count = 0
+
+      out.on 'data', (data) ->
+        chai.expect(data.price).to.equal null
+        count++
+      out.on 'disconnect', ->
+        chai.expect(count).to.equal 3
+
+      send.connect()
+      send.send
+        from: '+15005550006'
+        to: '+15005550006'
+        body: 'a'
+      send.send
+        from: '+15005550006'
+        to: '+15005550006'
+        body: 'b'
+      send.send
+        from: '+15005550006'
+        to: '+15005550006'
+        body: 'c'
+      send.disconnect()
+
   describe 'receiving SMS messages', ->
     it 'receives an SMS message', ->
 
