@@ -13,7 +13,8 @@ describe 'Sms component', ->
   out = null
   client = null
 
-  console.log "*** NOTE: testing only works in Node.js" unless process.env?
+  unless process.env?
+    return console.log "*** NOTE: testing only works in Node.js"
 
   beforeEach ->
     c = Sms.getComponent()
@@ -22,13 +23,17 @@ describe 'Sms component', ->
     c.inPorts.receive.attach noflo.internalSocket.createSocket()
     c.outPorts.out.attach noflo.internalSocket.createSocket()
 
-    return unless process.env?
     unless process.env.TWILIO_ACCOUNT_ID
       throw new Error 'Please set your test account SID to envrionment variable TWILIO_ACCOUNT_ID'
     unless process.env.TWILIO_AUTH_TOKEN
       throw new Error 'Please set your test auth token to envrionment variable TWILIO_AUTH_TOKEN'
 
     client = twilio process.env.TWILIO_ACCOUNT_ID, process.env.TWILIO_AUTH_TOKEN
+
+    cli = c.inPorts.client
+    cli.connect()
+    cli.send client
+    cli.disconnect()
 
   describe 'when instantiated', ->
     it 'should have input ports', ->
@@ -41,14 +46,6 @@ describe 'Sms component', ->
 
   describe 'twilio client', ->
     it 'accepts a twilio client object', ->
-      return unless process.env?
-
-      cli = c.inPorts.client
-
-      cli.connect()
-      cli.send client
-      cli.disconnect()
-
       chai.expect(c.client).to.equal client
       chai.expect(client.accountSid).to.equal process.env.TWILIO_ACCOUNT_ID
       chai.expect(client.authToken).to.equal process.env.TWILIO_AUTH_TOKEN
@@ -60,6 +57,25 @@ describe 'Sms component', ->
       out = c.outPorts.out
 
       out.on 'data', (data) ->
+        chai.expect(data.price).to.equal null
+        chai.expect(data.from).to.equal '+15005550006'
+        chai.expect(data.to).to.equal '+15005550006'
+        chai.expect(data.body).to.equal 'test'
+
+      send.connect()
+      send.send
+        from: '+15005550006'
+        to: '+15005550006'
+        body: 'test'
+      send.disconnect()
+
+    it 'sends an SMS message but an error is returned', ->
+      send = c.inPorts.send
+      out = c.outPorts.out
+
+      out.on 'data', (data) ->
+        chai.expect(data.status).to.equal 400
+        chai.expect(data.code).to.equal 21606
 
       send.connect()
       send.send
