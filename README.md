@@ -1,4 +1,4 @@
-# twilio [![Build Status](https://secure.travis-ci.org/kenhkan/twilio.png?branch=master)](http://travis-ci.org/kenhkan/twilio)
+# noflo-twilio [![Build Status](https://secure.travis-ci.org/kenhkan/noflo-twilio.png?branch=master)](http://travis-ci.org/kenhkan/noflo-twilio)
 
 Wrapper around the twilio API
 
