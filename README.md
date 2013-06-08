@@ -2,6 +2,9 @@
 
 Wrapper around the twilio API
 
+This package is incomplete. Please contribute new components and graphs.
+I'll try to incorporate as soon as time allows.
+
 ## Usage
 
 ### Client
