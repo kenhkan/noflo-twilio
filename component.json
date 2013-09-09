@@ -7,10 +7,9 @@
   "keywords": [
   ],
   "dependencies": {
-    "bergie/noflo": "*"
+    "noflo/noflo": "*"
   },
   "scripts": [
-    "components/Sms.coffee",
     "index.js"
   ],
   "json": [
@@ -18,7 +17,6 @@
   ],
   "noflo": {
     "components": {
-      "Sms": "components/Sms.coffee"
     }
   }
 }

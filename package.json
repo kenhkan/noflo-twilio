@@ -13,11 +13,11 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "undefined/blob/master/LICENSE-MIT"
+      "url": "undefined/blob/master/LICENSE.md"
     }
   ],
   "dependencies": {
-    "noflo": "~0.3.3",
+    "noflo": "~0.4.0",
     "twilio": "~1.1.2"
   },
   "devDependencies": {

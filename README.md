@@ -1,4 +1,4 @@
-# noflo-twilio [![Build Status](https://secure.travis-ci.org/kenhkan/noflo-twilio.png?branch=master)](http://travis-ci.org/kenhkan/noflo-twilio)
+# Twilio wrapper <br/>[![Build Status](https://secure.travis-ci.org/kenhkan/noflo-twilio.png?branch=master)](http://travis-ci.org/kenhkan/noflo-twilio) [![Dependency Status](https://gemnasium.com/kenhkan/noflo-twilio.png)](https://gemnasium.com/kenhkan/noflo-twilio) [![NPM version](https://badge.fury.io/js/noflo-twilio.png)](http://badge.fury.io/js/noflo-twilio) [![Stories in Ready](https://badge.waffle.io/kenhkan/noflo-twilio.png)](http://waffle.io/kenhkan/noflo-twilio)
 
 Wrapper around the twilio API
 
