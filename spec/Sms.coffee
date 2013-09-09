@@ -1,7 +1,7 @@
 noflo = require 'noflo'
 twilio = require 'twilio'
 
-if typeof process is 'object' and process.title is 'node'
+unless noflo.isBrowser()
   chai = require 'chai' unless chai
   Sms = require '../components/Sms.coffee'
 else
