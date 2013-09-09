@@ -5,6 +5,15 @@ Wrapper around the twilio API
 This package is incomplete. Please contribute new components and graphs.
 I'll try to incorporate as soon as time allows.
 
+## Testing
+
+This package requires manual testing because Twilio only allows private keys
+for testing. See
+  [https://www.twilio.com/docs/api/rest/test-credentials](https://www.twilio.com/docs/api/rest/test-credentials)
+  for more information.
+
+Run `grunt test:all` to test manually.
+
 ## Usage
 
 ### Client
